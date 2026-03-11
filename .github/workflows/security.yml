@@ -31,7 +31,7 @@ jobs:
             > results.sarif 2>/dev/null || true
 
       - name: Upload SARIF to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: results.sarif
         continue-on-error: true
