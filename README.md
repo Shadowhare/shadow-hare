@@ -46,7 +46,7 @@ cargo install shadowhare
 ### Install from source
 
 ```bash
-git clone https://github.com/br0wnD3v/shadowhare.git
+git clone https://github.com/Shadowhare/shadow-hare.git
 cd shadowhare
 cargo install --path .
 ```
@@ -850,7 +850,7 @@ Artifacts without version metadata are analyzed in Tier 3 best-effort mode with 
 **Prerequisites:** Rust 1.75+
 
 ```bash
-git clone https://github.com/br0wnD3v/shadowhare.git
+git clone https://github.com/Shadowhare/shadow-hare.git
 cd shadowhare
 cargo build --release
 
