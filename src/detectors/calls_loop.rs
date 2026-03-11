@@ -50,7 +50,7 @@ impl Detector for CallsLoop {
                     let name = program
                         .libfunc_registry
                         .generic_id(&inv.libfunc_id)
-                        .or_else(|| inv.libfunc_id.debug_name.as_deref())
+                        .or(inv.libfunc_id.debug_name.as_deref())
                         .unwrap_or("");
                     if name.contains("call_contract") || name.contains("library_call") {
                         Some(start + local_idx)
@@ -129,7 +129,7 @@ impl Detector for CallsLoop {
                 let name = program
                     .libfunc_registry
                     .generic_id(&inv.libfunc_id)
-                    .or_else(|| inv.libfunc_id.debug_name.as_deref())
+                    .or(inv.libfunc_id.debug_name.as_deref())
                     .unwrap_or("");
                 if inv.branches.len() >= 2 || name.contains("loop") || name.contains("iter") {
                     loop_like_site = Some(start + local_idx);

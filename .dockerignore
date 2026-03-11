@@ -1,0 +1,12 @@
+# Build artefacts
+target/
+
+# Version control
+.git/
+.github/
+
+# Non-essential directories
+docs/
+benches/
+tests/
+fixtures/

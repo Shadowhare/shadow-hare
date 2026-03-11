@@ -175,8 +175,7 @@ impl Detector for PragmaUncheckedFreshness {
                 run_taint_analysis(program, func.idx, seeds, &sanitizers, &["function_call"]);
 
             // Check if unsanitized taint reaches any sink (Return, storage_write, call_contract)
-            let taint_reaches_sink =
-                taint_reaches_any_sink(&cfg, &block_taint, program);
+            let taint_reaches_sink = taint_reaches_any_sink(&cfg, &block_taint, program);
 
             if let Some(site) = first_fetch_site {
                 if taint_reaches_sink {

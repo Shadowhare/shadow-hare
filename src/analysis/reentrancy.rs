@@ -98,29 +98,21 @@ pub fn check_reentrancy(program: &ProgramIR, func_idx: usize) -> Vec<ReentrancyE
 
         if has_read_before && has_write_after {
             // Find the specific read access for reporting.
-            let read_access = storage
-                .iter()
-                .find(|a| match a {
-                    StorageAccess::Read { stmt_idx, .. } => {
-                        stmt_to_block
-                            .get(stmt_idx)
-                            .map(|block| backward_reachable.contains(block))
-                            .unwrap_or(false)
-                    }
-                    _ => false,
-                });
+            let read_access = storage.iter().find(|a| match a {
+                StorageAccess::Read { stmt_idx, .. } => stmt_to_block
+                    .get(stmt_idx)
+                    .map(|block| backward_reachable.contains(block))
+                    .unwrap_or(false),
+                _ => false,
+            });
 
-            let write_access = storage
-                .iter()
-                .find(|a| match a {
-                    StorageAccess::Write { stmt_idx, .. } => {
-                        stmt_to_block
-                            .get(stmt_idx)
-                            .map(|block| forward_reachable.contains(block))
-                            .unwrap_or(false)
-                    }
-                    _ => false,
-                });
+            let write_access = storage.iter().find(|a| match a {
+                StorageAccess::Write { stmt_idx, .. } => stmt_to_block
+                    .get(stmt_idx)
+                    .map(|block| forward_reachable.contains(block))
+                    .unwrap_or(false),
+                _ => false,
+            });
 
             let (read_stmt, read_addr) = match read_access {
                 Some(StorageAccess::Read { stmt_idx, addr_var }) => (*stmt_idx, *addr_var),
@@ -133,8 +125,10 @@ pub fn check_reentrancy(program: &ProgramIR, func_idx: usize) -> Vec<ReentrancyE
             };
 
             // Resolve storage base addresses by tracing through def-use chains.
-            let read_base = read_addr.and_then(|v| resolve_storage_base(&defuse, v, program, start));
-            let write_base = write_addr.and_then(|v| resolve_storage_base(&defuse, v, program, start));
+            let read_base =
+                read_addr.and_then(|v| resolve_storage_base(&defuse, v, program, start));
+            let write_base =
+                write_addr.and_then(|v| resolve_storage_base(&defuse, v, program, start));
 
             // Determine if the read and write target the same storage slot.
             let same_slot = match (read_base, write_base) {
@@ -197,8 +191,7 @@ fn resolve_storage_base(
 
         // For address-related operations (storage_address_from_base, etc.),
         // trace through to the first argument.
-        if name.contains("storage_address_from_base")
-            || name.contains("storage_base_address_from")
+        if name.contains("storage_address_from_base") || name.contains("storage_base_address_from")
         {
             if inv.args.is_empty() {
                 return None;

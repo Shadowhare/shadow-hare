@@ -60,12 +60,8 @@ impl Detector for CostlyLoop {
                             continue;
                         };
 
-                        let has_storage = program
-                            .libfunc_registry
-                            .is_storage_read(&inv.libfunc_id)
-                            || program
-                                .libfunc_registry
-                                .is_storage_write(&inv.libfunc_id);
+                        let has_storage = program.libfunc_registry.is_storage_read(&inv.libfunc_id)
+                            || program.libfunc_registry.is_storage_write(&inv.libfunc_id);
 
                         if has_storage {
                             findings.push(Finding::new(

@@ -91,7 +91,10 @@ impl<'a> ForwardAnalysis for WriteGuardAnalysis<'a> {
                 }
             }
             // Also check callee's computed summary for caller checks
-            if let Some(callee_idx) = self.callgraph.callee_of(&inv.libfunc_id, &self.program.libfunc_registry) {
+            if let Some(callee_idx) = self
+                .callgraph
+                .callee_of(&inv.libfunc_id, &self.program.libfunc_registry)
+            {
                 if callee_idx < self.summaries.has_caller_check.len()
                     && self.summaries.has_caller_check[callee_idx]
                 {
@@ -164,7 +167,11 @@ impl Detector for WriteWithoutCallerCheck {
             }
             let end = end.min(program.statements.len());
 
-            let analysis = WriteGuardAnalysis { program, callgraph: &callgraph, summaries: &summaries };
+            let analysis = WriteGuardAnalysis {
+                program,
+                callgraph: &callgraph,
+                summaries: &summaries,
+            };
             let cfg = Cfg::build(&program.statements, start, end);
             let block_out = run_forward(&analysis, &cfg, &program.statements);
 

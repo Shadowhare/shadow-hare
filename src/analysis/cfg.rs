@@ -577,7 +577,10 @@ mod tests {
         );
         // The loop header should be the block containing stmt 1.
         let lp = &loops[0];
-        assert!(lp.body.len() >= 2, "Loop body should have at least 2 blocks");
+        assert!(
+            lp.body.len() >= 2,
+            "Loop body should have at least 2 blocks"
+        );
     }
 
     #[test]
@@ -604,10 +607,14 @@ mod tests {
         );
         let lp = &loops[0];
         // Verify call_contract stmt 0 is in the loop body
-        let call_block_in_loop = cfg.blocks.iter().any(|b| {
-            lp.body.contains(&b.id) && b.stmts.contains(&0)
-        });
-        assert!(call_block_in_loop, "Block containing stmt 0 should be in loop body");
+        let call_block_in_loop = cfg
+            .blocks
+            .iter()
+            .any(|b| lp.body.contains(&b.id) && b.stmts.contains(&0));
+        assert!(
+            call_block_in_loop,
+            "Block containing stmt 0 should be in loop body"
+        );
     }
 
     #[test]

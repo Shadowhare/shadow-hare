@@ -1057,3 +1057,105 @@ fn missing_zero_address_check_clean_when_address_is_checked() {
         "missing_zero_address_check should not fire when target address is explicitly checked. Got: {zero_addr_findings:?}"
     );
 }
+
+// ── New detectors with fixtures (v0.1.0 release) ────────────────────────────
+
+#[test]
+fn seeded_pure_unchecked_ecrecover_fires() {
+    let (ids, count) = run_seeded("pure", "unchecked_ecrecover.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"unchecked_ecrecover".to_string()),
+        "unchecked_ecrecover not in {ids:?}"
+    );
+}
+
+#[test]
+fn seeded_pure_pragma_unchecked_freshness_fires() {
+    let (ids, count) = run_seeded("pure", "pragma_unchecked_freshness.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"pragma_unchecked_freshness".to_string()),
+        "pragma_unchecked_freshness not in {ids:?}"
+    );
+}
+
+#[test]
+fn seeded_pure_pragma_missing_aggregation_fires() {
+    let (ids, count) = run_seeded("pure", "pragma_missing_aggregation.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"pragma_missing_aggregation".to_string()),
+        "pragma_missing_aggregation not in {ids:?}"
+    );
+}
+
+#[test]
+fn seeded_pure_pragma_unchecked_num_sources_fires() {
+    let (ids, count) = run_seeded("pure", "pragma_unchecked_num_sources.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"pragma_unchecked_num_sources".to_string()),
+        "pragma_unchecked_num_sources not in {ids:?}"
+    );
+}
+
+#[test]
+fn seeded_pure_missing_pausable_fires() {
+    let (ids, count) = run_seeded("pure", "missing_pausable.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"missing_pausable".to_string()),
+        "missing_pausable not in {ids:?}"
+    );
+}
+
+#[test]
+fn seeded_pure_gas_griefing_fires() {
+    let (ids, count) = run_seeded("pure", "gas_griefing.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"gas_griefing".to_string()),
+        "gas_griefing not in {ids:?}"
+    );
+}
+
+#[test]
+fn seeded_pure_uninitialized_storage_read_fires() {
+    let (ids, count) = run_seeded("pure", "uninitialized_storage_read.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"uninitialized_storage_read".to_string()),
+        "uninitialized_storage_read not in {ids:?}"
+    );
+}
+
+#[test]
+fn seeded_pure_event_before_state_change_fires() {
+    let (ids, count) = run_seeded("pure", "event_before_state_change.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"event_before_state_change".to_string()),
+        "event_before_state_change not in {ids:?}"
+    );
+}
+
+#[test]
+fn seeded_pure_magic_numbers_fires() {
+    let (ids, count) = run_seeded("pure", "magic_numbers.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"magic_numbers".to_string()),
+        "magic_numbers not in {ids:?}"
+    );
+}
+
+#[test]
+fn seeded_pure_excessive_function_complexity_fires() {
+    let (ids, count) = run_seeded("pure", "excessive_function_complexity.sierra.json");
+    assert_eq!(count, 1, "Expected exactly 1 finding, got {count}: {ids:?}");
+    assert!(
+        ids.contains(&"excessive_function_complexity".to_string()),
+        "excessive_function_complexity not in {ids:?}"
+    );
+}

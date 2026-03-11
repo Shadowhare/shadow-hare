@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use crate::analysis::reentrancy::{build_stmt_to_block_map, forward_reachable_blocks};
+use crate::analysis::reentrancy::forward_reachable_blocks;
 use crate::analysis::sanitizers::all_general_sanitizers;
 use crate::analysis::taint::run_taint_analysis;
 use crate::detectors::{Confidence, Detector, DetectorRequirements, Finding, Location, Severity};
@@ -91,8 +91,6 @@ impl Detector for MissingEventsArithmetic {
             // Phase 2: Run CFG-based taint analysis
             let (cfg, block_taint) =
                 run_taint_analysis(program, func.idx, seeds, &sanitizers, &["function_call"]);
-
-            let stmt_to_block = build_stmt_to_block_map(&cfg, start);
 
             // Phase 3: Find storage_write blocks where tainted (arithmetic-derived) value is written
             let mut write_site: Option<usize> = None;

@@ -1,7 +1,6 @@
 use std::collections::HashSet;
 
 use crate::analysis::cfg::Cfg;
-use crate::analysis::reentrancy::build_stmt_to_block_map;
 use crate::analysis::taint::run_taint_analysis;
 use crate::detectors::{Confidence, Detector, DetectorRequirements, Finding, Location, Severity};
 use crate::error::AnalyzerWarning;
@@ -83,7 +82,6 @@ impl Detector for MissingZeroAddressCheck {
                 &["function_call"],
             );
 
-            let stmt_to_block = build_stmt_to_block_map(&cfg, start);
             let idom = cfg.dominators();
 
             // Find guard blocks: blocks containing zero-check libfuncs on address-tainted args

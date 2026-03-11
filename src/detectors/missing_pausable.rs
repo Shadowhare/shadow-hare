@@ -72,9 +72,9 @@ impl Detector for MissingPausable {
         }
 
         // Account contracts don't need pause mechanisms — they're user wallets.
-        let is_account = program.all_functions().any(|f| {
-            f.name.contains("__execute__") || f.name.contains("__validate__")
-        });
+        let is_account = program
+            .all_functions()
+            .any(|f| f.name.contains("__execute__") || f.name.contains("__validate__"));
         if is_account {
             return (findings, warnings);
         }

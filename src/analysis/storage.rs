@@ -27,10 +27,16 @@ pub fn find_storage_accesses(
             let inv = stmt.as_invocation()?;
             if libfuncs.is_storage_read(&inv.libfunc_id) {
                 let addr_var = inv.args.first().copied();
-                Some(StorageAccess::Read { stmt_idx: idx, addr_var })
+                Some(StorageAccess::Read {
+                    stmt_idx: idx,
+                    addr_var,
+                })
             } else if libfuncs.is_storage_write(&inv.libfunc_id) {
                 let addr_var = inv.args.first().copied();
-                Some(StorageAccess::Write { stmt_idx: idx, addr_var })
+                Some(StorageAccess::Write {
+                    stmt_idx: idx,
+                    addr_var,
+                })
             } else {
                 None
             }

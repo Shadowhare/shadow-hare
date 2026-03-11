@@ -167,10 +167,10 @@ fn check_inline_nonce_pattern(program: &ProgramIR, func_idx: usize) -> bool {
         }
 
         // Check if storage write uses an arithmetic-derived value
-        if program.libfunc_registry.is_storage_write(&inv.libfunc_id) {
-            if inv.args.iter().any(|a| arith_vars.contains(a)) {
-                return true;
-            }
+        if program.libfunc_registry.is_storage_write(&inv.libfunc_id)
+            && inv.args.iter().any(|a| arith_vars.contains(a))
+        {
+            return true;
         }
     }
 

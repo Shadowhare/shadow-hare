@@ -976,3 +976,140 @@ errors.
 
 **Remediation:** Revisit write ordering and intermediate reads/assertions to
 confirm intended final state.
+
+---
+
+## unchecked_ecrecover
+
+**Severity:** High
+**Confidence:** Medium
+**Type:** Sierra-only
+
+Detects ECDSA signature verification calls (`ecdsa_recover`, `verify_ecdsa_signature`,
+`check_ecdsa_signature`, `secp256k1`, `secp256r1`) where the return value is not
+checked. Ignoring the verification result means invalid signatures are silently
+accepted, bypassing authentication.
+
+**Remediation:** Always check the return value of ECDSA verification. Handle the
+failure case explicitly.
+
+---
+
+## pragma_unchecked_freshness
+
+**Severity:** Medium
+**Confidence:** Low
+**Type:** Sierra-only (taint-based)
+
+Detects Pragma oracle price feed consumption without an observable timestamp or
+freshness check. Stale oracle data can be exploited for price manipulation.
+
+**Remediation:** Check `last_updated_timestamp` against a maximum staleness
+threshold before using oracle prices.
+
+---
+
+## pragma_missing_aggregation
+
+**Severity:** Medium
+**Confidence:** Low
+**Type:** Sierra-only (taint-based)
+
+Detects Pragma oracle price consumption without aggregation mode verification.
+Single-source prices are more susceptible to manipulation.
+
+**Remediation:** Use aggregated price feeds (median or TWAP) and verify the
+aggregation mode.
+
+---
+
+## pragma_unchecked_num_sources
+
+**Severity:** Medium
+**Confidence:** Low
+**Type:** Sierra-only (taint-based)
+
+Detects Pragma oracle price consumption without checking the number of reporting
+sources. Low source count makes price manipulation significantly easier.
+
+**Remediation:** Check `num_sources_aggregated` against a minimum threshold.
+
+---
+
+## missing_pausable
+
+**Severity:** Low
+**Confidence:** Low
+**Type:** Sierra-only (keyword/component heuristic)
+
+Detects contracts with state-modifying external functions but no observable pause
+mechanism. Pausability is a safety net for DeFi contracts.
+
+**Remediation:** Integrate OpenZeppelin's Pausable component and apply
+`assert_not_paused()` guards on critical external functions.
+
+---
+
+## gas_griefing
+
+**Severity:** Medium
+**Confidence:** Low
+**Type:** Sierra-only (CFG loop + reachability)
+
+Detects unbounded loops in external functions where iteration count could be
+controlled by an external caller, enabling gas griefing attacks.
+
+**Remediation:** Bound loop iterations with an explicit maximum or use pagination.
+
+---
+
+## uninitialized_storage_read
+
+**Severity:** Medium
+**Confidence:** Low
+**Type:** Sierra-only
+
+Detects external functions that read from storage when no observable write path
+exists in the entire program. Uninitialized storage returns zero in Starknet.
+
+**Remediation:** Ensure storage slots are initialized in constructor/initializer.
+
+---
+
+## event_before_state_change
+
+**Severity:** Low
+**Confidence:** Low
+**Type:** Sierra-only (CFG forward reachability)
+
+Detects event emissions before the state change they describe is finalized. If
+the transaction reverts after the event, indexers record inconsistent state.
+
+**Remediation:** Emit events after state changes are finalized
+(Checks-Effects-Interactions-Events pattern).
+
+---
+
+## magic_numbers
+
+**Severity:** Info
+**Confidence:** Low
+**Type:** Sierra-only
+
+Detects large numeric literals used directly in arithmetic or comparisons without
+named constants. Magic numbers reduce code readability and maintainability.
+
+**Remediation:** Replace magic numbers with named constants.
+
+---
+
+## excessive_function_complexity
+
+**Severity:** Info
+**Confidence:** High
+**Type:** Sierra-only (CFG cyclomatic complexity)
+
+Detects functions with cyclomatic complexity exceeding threshold (20). High
+complexity increases the risk of security bugs in untested paths.
+
+**Remediation:** Refactor into smaller, focused helper functions.

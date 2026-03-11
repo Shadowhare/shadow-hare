@@ -419,9 +419,15 @@ impl FunctionSummaries {
                     if has_read || has_arith || has_addr {
                         for branch in &inv.branches {
                             for &r in &branch.results {
-                                if has_read { storage_read_vars.insert(r); }
-                                if has_arith { arith_result_vars.insert(r); }
-                                if has_addr { storage_addr_vars.insert(r); }
+                                if has_read {
+                                    storage_read_vars.insert(r);
+                                }
+                                if has_arith {
+                                    arith_result_vars.insert(r);
+                                }
+                                if has_addr {
+                                    storage_addr_vars.insert(r);
+                                }
                             }
                         }
                     }
@@ -460,7 +466,8 @@ impl FunctionSummaries {
                 // OR the same storage address as the read (stronger same-slot signal).
                 if read_then_arith && program.libfunc_registry.is_storage_write(&inv.libfunc_id) {
                     let write_uses_arith = inv.args.iter().any(|a| arith_result_vars.contains(a));
-                    let write_uses_same_addr = inv.args.iter().any(|a| storage_addr_vars.contains(a));
+                    let write_uses_same_addr =
+                        inv.args.iter().any(|a| storage_addr_vars.contains(a));
                     if write_uses_arith || write_uses_same_addr {
                         found_nonce_incr = true;
                     }
@@ -550,10 +557,9 @@ impl FunctionSummaries {
                                 }
                                 if has_felt_arith[callee_idx] {
                                     // Check if caller has unchecked tainted args flowing into the callee
-                                    let has_unchecked_caller_arg = inv
-                                        .args
-                                        .iter()
-                                        .any(|a| tainted.contains(a) && !range_checked_vars.contains(a));
+                                    let has_unchecked_caller_arg = inv.args.iter().any(|a| {
+                                        tainted.contains(a) && !range_checked_vars.contains(a)
+                                    });
                                     if has_unchecked_caller_arg {
                                         // Callee performs unchecked felt252 arithmetic on user input.
                                         found_felt_arith = true;
@@ -568,7 +574,8 @@ impl FunctionSummaries {
                                                 callee_name,
                                                 start + local_idx
                                             )];
-                                            if let Some(callee_chain) = felt_chains.get(callee_idx) {
+                                            if let Some(callee_chain) = felt_chains.get(callee_idx)
+                                            {
                                                 chain.extend(callee_chain.iter().cloned());
                                             }
                                             felt_chain = Some(chain);

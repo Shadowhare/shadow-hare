@@ -139,11 +139,11 @@ pub struct RawBranchInfo {
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]
 pub enum RawBranchTarget {
-    Fallthrough(serde_json::Value), // "Fallthrough" string
     Statement {
         #[serde(rename = "Statement")]
         idx: u64,
     },
+    Fallthrough(serde_json::Value), // "Fallthrough" string — must be last (catch-all)
 }
 
 impl RawBranchTarget {

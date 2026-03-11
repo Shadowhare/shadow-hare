@@ -71,8 +71,6 @@ impl Detector for GasGriefing {
                 continue;
             }
 
-            let mut emitted = false;
-
             // For each loop, check if it has array iteration AND an external call
             // is forward-reachable from within the loop body
             for lp in &loops {
@@ -164,7 +162,6 @@ impl Detector for GasGriefing {
                             col: None,
                         },
                     ));
-                    emitted = true;
                     break;
                 }
             }
