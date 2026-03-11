@@ -3,3 +3,7 @@
 # Build artifacts
 target/
 
+# Test data (excluded from crate via Cargo.toml, not shipped)
+target_contracts/
+fixtures/
+
