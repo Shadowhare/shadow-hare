@@ -1,4 +1,4 @@
-.PHONY: build test lint fmt audit bench docker release clean check install
+.PHONY: build test lint fmt audit release clean check install
 
 build:
 	cargo build --all-targets
@@ -15,12 +15,6 @@ fmt:
 
 audit:
 	cargo audit
-
-bench:
-	cargo bench --bench analysis_bench
-
-docker:
-	docker build -t shadowhare .
 
 release:
 	cargo build --release

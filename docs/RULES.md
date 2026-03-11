@@ -61,7 +61,7 @@ reentrancy guards, suppress with a location hash in `Scarb.toml`.
 
 ## felt252_overflow
 
-**Severity:** High
+**Severity:** Medium
 **Confidence:** Low
 **Type:** Sierra-only
 
@@ -231,7 +231,7 @@ authorization before calling `replace_class_syscall`.
 
 ## unchecked_integer_overflow
 
-**Severity:** High
+**Severity:** Medium
 **Confidence:** High
 **Type:** Sierra-only
 
@@ -247,7 +247,7 @@ explicitly.
 
 ## integer_truncation
 
-**Severity:** High
+**Severity:** Medium
 **Confidence:** High
 **Type:** Sierra-only
 
@@ -261,7 +261,7 @@ wide integer types where precision is required.
 
 ## unchecked_address_cast
 
-**Severity:** High
+**Severity:** Medium
 **Confidence:** High
 **Type:** Sierra-only
 
@@ -275,7 +275,7 @@ garbage addresses.
 
 ## unchecked_array_access
 
-**Severity:** High
+**Severity:** Medium
 **Confidence:** High
 **Type:** Sierra-only
 
@@ -363,7 +363,7 @@ This can expose unrestricted state mutation.
 
 ## l1_handler_unchecked_amount
 
-**Severity:** High
+**Severity:** Medium
 **Confidence:** Medium
 **Type:** Sierra-only
 
